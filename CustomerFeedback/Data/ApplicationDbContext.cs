@@ -9,5 +9,7 @@ namespace CustomerFeedback.Data
             : base(options)
         {
         }
+
+        public DbSet<CustomerFeedback> CustomerFeedbackEntries { get; set; }
     }
 }
