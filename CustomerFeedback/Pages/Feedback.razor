@@ -1,0 +1,42 @@
+﻿@page "/feedback"
+@using CustomerFeedback.Data
+@using Microsoft.EntityFrameworkCore
+@using Radzen
+@using Radzen.Blazor
+
+@inject IConfiguration configuration;
+@inject ICustomerFeedbackRepository CustomerFeedbackRepository;
+
+
+<RadzenText TextStyle="TextStyle.H3" TagName="TagName.H1" Class="my-4">
+    Category
+</RadzenText>
+
+
+<RadzenDataGrid AllowColumnResize="true" GridLines="@GridLines"
+PageSize="20" AllowPaging="true" AllowSorting="true" Data="@CustomerFeedbackEntries" TItem="CustomerFeedback" ColumnWidth="300px">
+    <Columns>
+        <RadzenDataGridColumn TItem="CustomerFeedback" Property="FeedbackID" Title="ID" Frozen="true" Width="200" />
+
+
+        <RadzenDataGridColumn TItem="CustomerFeedback" Property="CustomerName" Title="Customer Name" Frozen="true" Width="200" />
+
+    </Columns>
+</RadzenDataGrid>
+
+
+
+@code {
+    private List<CustomerFeedback> CustomerFeedbackEntries;
+    private ICustomerFeedbackRepository _customerFeedbackRepository;
+
+
+    DataGridGridLines GridLines = DataGridGridLines.Both;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        _customerFeedbackRepository = CustomerFeedbackRepository;
+        CustomerFeedbackEntries = await _customerFeedbackRepository.GetAllCustomerFeedbackAsync();
+    }
+}

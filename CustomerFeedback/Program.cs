@@ -30,8 +30,12 @@ namespace CustomerFeedback
             builder.Services.AddServerSideBlazor();
 
             builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            builder.Services.AddTransient<ICustomerFeedbackRepository, CustomerFeedbackRepository>();
 
             var app = builder.Build();
+
+            DataSeeder.Seed(app.Services);
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
